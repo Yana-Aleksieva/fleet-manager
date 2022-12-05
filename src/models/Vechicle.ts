@@ -1,9 +1,9 @@
 import { RecordId } from "../services/Storage";
-import { Record, Rented } from "./util";
+import { Record, Rented, Trucks } from "./util";
 
 
 
-export abstract class Vechicle {
+export abstract class Vechicle{
     id: RecordId
     make: string
     model: string

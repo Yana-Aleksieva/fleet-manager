@@ -10,6 +10,7 @@ export interface Service <T> {
     create(data): Promise<T>;
     update(id: any, data: any): Promise<T>
     delete(id: string): Promise<void>
+    
 }
 
 
@@ -20,6 +21,7 @@ export abstract class DataService<T> implements Service<T>{
     ) { }
     async getAll(): Promise<T[]> {
         const records = (await this.collection.getAll()).map(r => this.parseRecord(r));
+        
         return records;
     }
     async getById(id: string): Promise<T> {
@@ -36,8 +38,14 @@ export abstract class DataService<T> implements Service<T>{
         const record = await this.collection.update(id, data);
         return this.parseRecord(record);
     }
-    delete(id: string): Promise<void> {
+      async delete(id: string): Promise<void> {
         return this.collection.delete(id);
+    }
+
+    async filter(criteria: string){
+     const result =    (await this.collection.getAll()).filter(obj => obj.hasOwnProperty(criteria));
+    
+     return result
     }
     protected abstract parseRecord(record: Record): T
     protected abstract validate(data: any): void

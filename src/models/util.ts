@@ -28,3 +28,13 @@ export interface Cars extends Record{
     rentalPrice: number
 
 }
+
+export interface Trucks extends Record{
+
+    id: RecordId,
+    make: string,
+    model: string,
+    cargoType: Cargo,
+    capacity: number,
+    rentalPrice: number
+}

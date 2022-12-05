@@ -22,12 +22,12 @@
         </header>
 
         <section class="editor">
-            <button class="action new">Add New Truck</button>
+            <button class="action new" id="addTruck">Add New Truck</button>
         </section>
 
-        <section class="editor">
-            <h3>New Truck</h3>
-            <form class="align">
+        <section class="editor" id="formContainer" style="display:none ;">
+      
+            <form class="align" id="add-form">
                 <label>
                     <span>Make</span>
                     <input type="text" name="make">
@@ -58,15 +58,13 @@
                 </label>
 
                 <div>
-                    <button class="action confirm">Add Car</button>
-                    <button class="action cancel">Cancel</button>
+                    <button class="action confirm" id="save">Add Car</button>
+                    <button class="action cancel" id="cancel">Cancel</button>
                 </div>
             </form>
-        </section>
-
-        <section class="editor">
-            <h3>Edit Truck</h3>
-            <form class="align">
+          
+            <form class="align"id="edit-form">
+                <input type="hidden" id="" name="id" >
                 <label>
                     <span>Make</span>
                     <input type="text" name="make">
@@ -97,11 +95,13 @@
                 </label>
 
                 <div>
-                    <button class="action confirm">Save Truck</button>
-                    <button class="action cancel">Cancel</button>
+                    <button class="action confirm" id="save">Save Truck</button>
+                    <button class="action cancel" id="cancel">Cancel</button>
                 </div>
             </form>
         </section>
+
+   
 
         <main>
 
@@ -119,7 +119,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <!--   <tr>
                         <td>3af4-ca05</td>
                         <td>Iveco</td>
                         <td>Eurocargo</td>
@@ -142,7 +142,7 @@
                             <button class="action edit">Edit</button>
                             <button class="action delete">Delete</button>
                         </td>
-                    </tr>
+                    </tr>-->
                 </tbody>
             </table>
         </main>

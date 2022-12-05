@@ -42,15 +42,15 @@ export class Editor {
     clear() {
 
         this.name.textContent = '';
-      
+
         this.form.reset();
     }
 
     remove() {
-    
+
         this.form.remove();
-       
-       
+
+
     }
 
     attachTo(parent: Node, name: string, section: HTMLElement) {

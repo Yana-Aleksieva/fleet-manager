@@ -21,14 +21,14 @@ export class Car extends Vechicle {
 
     ) {
         super();
-        this.id = id,
+            this.id = id,
             this.make = make,
             this.model = model,
             this.bodyType = bodyType,
             this.numberOfSeats = numberOfSeats,
             this.transmission = transmission,
             this.rentalPrice = rentalPrice
-        this.rentedTo === undefined ? null : this.rentedTo = rentedTo
+            this.rentedTo === undefined ? null : this.rentedTo = rentedTo
 
 
 

@@ -30,4 +30,9 @@ export class Collections {
     delete(id: RecordId): Promise<void> {
         return this.storage.delete(this.name, id);
     }
+    async filter(criteria: string): Promise<Record[]> {
+        return   (await this.getAll()).filter(obj => obj.hasOwnProperty(criteria));
+       
+        
+       }
 }

@@ -24,7 +24,7 @@ tableManager.element.addEventListener('click', onTableClick);
 addBtn.addEventListener('click', (event: SubmitEvent) => {
 
     
-   // section.style.display = 'block';
+
     addForm.attachTo(section, 'Add Car', section)
 });
 
@@ -33,7 +33,7 @@ hydrate(tableManager);
 
 async function hydrate(tableManager: Table) {
     if (localStorage.length != 0) {
-        const cars = await carService.getAll();
+        const cars = await carService.filter('numberOfSeats');
         for (let item of cars) {
             tableManager.add(item);
         }
@@ -43,7 +43,7 @@ async function hydrate(tableManager: Table) {
 
 
 async function onTableClick(event: MouseEvent) {
-    //section.style.display = 'block';
+    
     if (event.target instanceof HTMLButtonElement) {
 
         const id = event.target.parentElement.parentElement.id;
