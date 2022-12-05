@@ -19,16 +19,25 @@ const tableManager = new Table(table, createTableRow, identifyCar);
 const addForm = new Editor(form, onSubmit.bind(null, tableManager), ['make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice']);
 const formEDit = new Editor(editForm, onEdit.bind(null, tableManager), ['id', 'make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice']);
 formEDit.remove();
-addForm.remove()
-addBtn.addEventListener('click', (event: SubmitEvent) => addForm.attachTo(document.querySelector('#addCar')));
-hydrate(tableManager);
+addForm.remove();
 tableManager.element.addEventListener('click', onTableClick);
 
+addBtn.addEventListener('click', (event: SubmitEvent) => {
+    let section: HTMLElement = document.querySelector('#addCar');
+    section.style.display = 'block'
+    addForm.attachTo(section)
+});
+hydrate(tableManager);
+
+
 async function hydrate(tableManager: Table) {
-    const cars = await carService.getAll();
-    for (let item of cars) {
-        tableManager.add(item);
+    if (localStorage.length != 0) {
+        const cars = await carService.getAll();
+        for (let item of cars) {
+            tableManager.add(item);
+        }
     }
+
 }
 
 
@@ -41,6 +50,7 @@ async function onTableClick(event: MouseEvent) {
 
             formEDit.attachTo(section);
             const record = tableManager.get(id);
+            console.log(record)
             formEDit.setValues(record);
         } else {
 
@@ -48,7 +58,7 @@ async function onTableClick(event: MouseEvent) {
             await carService.delete(id);
             let row = tableManager.getRow(id);
             row.remove()
-           
+
 
         }
     }
@@ -85,7 +95,7 @@ async function onSubmit(tableManager: Table, { make, model, bodyType, numberOfSe
         transmission,
         rentalPrice
     });
-
+    console.log(result)
     tableManager.add(result);
     addForm.clear()
     addForm.remove();

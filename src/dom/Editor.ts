@@ -4,7 +4,9 @@ export class Editor {
     constructor(
         private form: HTMLFormElement,
         private callback: (data: object) => any,
-        private propNames: string[]
+        private propNames: string[],
+        //private button: HTMLButtonElement
+
     ) {
         this.form.addEventListener('submit', this.onSubmit.bind(this));
 
@@ -43,33 +45,20 @@ export class Editor {
         parent.appendChild(this.form);
     }
 
-    private onSubmit(event: Event) {
+    private onSubmit(event: SubmitEvent) {
         event.preventDefault();
 
-
-        
-
-         
-                const formData = new FormData(this.form);
-                //console.log(event.target as HTMLInputElement)
-                const data = Object.fromEntries(this.propNames.map(n => [n, formData.get(n)]));
-                this.callback(data);
-            
+        if (event.submitter.id != 'cancel') {
+            const formData = new FormData(this.form);
+            const data = Object.fromEntries(this.propNames.map(n => [n, formData.get(n)]));
+            this.callback(data);
 
 
+        } else {
+            this.clear();
+            this.remove()
+        }
 
-   
-
-        //         if ((event.target as HTMLInputElement).type === 'submit') {
-
-        //             
-        //         }else{
-        //             console.log((event.target as HTMLButtonElement).id );
-        //             console.log(event.currentTarget.addEventListener('click',(e) => {
-        // console.log(e.target)
-
-        //             }))
-        //         }
 
     }
 }
