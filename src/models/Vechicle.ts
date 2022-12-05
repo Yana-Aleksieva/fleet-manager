@@ -1,9 +1,10 @@
 import { RecordId } from "../services/Storage";
-import { Record, Rented, Trucks } from "./util";
+import { Truck } from "./Truck";
+import { Cars, Record, Rented, Trucks } from "./util";
 
 
 
-export abstract class Vechicle{
+export abstract class Vechicle {
     id: RecordId
     make: string
     model: string
@@ -16,3 +17,5 @@ export abstract class Vechicle{
 // - `model`: string
 // - `rentalPrice`: number
 // - `rentedTo`: string or null
+
+

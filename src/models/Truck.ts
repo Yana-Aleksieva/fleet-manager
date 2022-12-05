@@ -4,7 +4,7 @@ import { Vechicle } from "./Vechicle";
 
 
 export class Truck extends Vechicle {
-  
+type: 'truck'  
 cargoType: Cargo
 capacity: number
 

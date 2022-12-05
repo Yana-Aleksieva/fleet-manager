@@ -15,7 +15,7 @@ const storage = new LocalStorage();
 const vechicles = new Collections(storage, 'vehicles');
 const carService = new CarService(vechicles);
 const tableManager = new Table(table, createTableRow, identifyCar);
-const addForm = new Editor(form, onSubmit.bind(null, tableManager), ['make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice']);
+const addForm = new Editor(form, onSubmit.bind(null, tableManager), ['make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice', 'type']);
 const formEDit = new Editor(editForm, onEdit.bind(null, tableManager), ['id', 'make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice']);
 formEDit.remove();
 addForm.remove();
@@ -59,7 +59,7 @@ async function onTableClick(event: MouseEvent) {
             await carService.delete(id);
             let row = tableManager.getRow(id);
             row.remove();
-           // section.style.display = 'none';
+           
 
 
 
@@ -76,7 +76,7 @@ function createTableRow(car: Cars) {
         td({}, car.bodyType),
         td({}, car.numberOfSeats.toString()),
         td({}, car.transmission),
-        td({}, car.rentalPrice.toString()),
+        td({}, `$${car.rentalPrice}/day`),
         td({}, button({ className: 'action', id: 'edit' }, 'Edit'), button({ className: 'action', id: 'cancel' }, 'Delete'))
     )
 
@@ -96,7 +96,9 @@ async function onSubmit(tableManager: Table, { make, model, bodyType, numberOfSe
         bodyType,
         numberOfSeats,
         transmission,
-        rentalPrice
+        rentalPrice,
+        type: 'car',
+        status: 'Available'
     });
 
     tableManager.add(result);

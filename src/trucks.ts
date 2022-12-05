@@ -37,13 +37,11 @@ hydrate(tableManager);
 
 
 async function hydrate(tableManager: Table) {
-    // 
-
 
     if (localStorage.length != 0) {
 
         const trucks = await truckService.filter('capacity');
-        //console.log(trucks)
+  
         for (let item of trucks) {
             tableManager.add(item);
         }
@@ -81,8 +79,8 @@ function createTableRow(truck: Trucks) {
         td({}, truck.make),
         td({}, truck.model),
         td({}, truck.cargoType),
-        td({}, truck.capacity.toString()),
-        td({}, truck.rentalPrice.toString()),
+        td({}, `${truck.capacity}tons`),
+        td({}, `$${truck.rentalPrice}/day`),
         td({}, button({ className: 'action', id: 'edit' }, 'Edit'), button({ className: 'action', id: 'cancel' }, 'Delete'))
     )
 
@@ -101,7 +99,9 @@ async function onSubmit(tableManager: Table, { make, model, cargoType, capacity,
         model,
         cargoType,
         capacity,
-        rentalPrice
+        rentalPrice,
+        type: 'truck',
+        status: 'Available'
     });
 
     tableManager.add(result);

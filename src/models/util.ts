@@ -38,3 +38,18 @@ export interface Trucks extends Record{
     capacity: number,
     rentalPrice: number
 }
+
+export interface Vechicle {
+    id: RecordId
+    make: string
+    model: string
+    rentalPrice: number
+    rentedTo?: string | null
+    bodyTYpe? : string
+    numberOfSeats?: number
+    transmission? : string
+    cargoType?: number
+    capacity?: number
+    
+
+}
