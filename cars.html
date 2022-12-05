@@ -22,7 +22,7 @@
         </header>
 
         <section class="editor">
-            <button class="action new">Add New Car</button>
+            <button class="action" id="add">Add New Car</button>
         </section>
 
         <section class="editor" id="addCar" >
@@ -66,15 +66,16 @@
                 </label>
 
                 <div>
-                    <button class="action confirm">Add Car</button>
-                    <button class="action cancel">Cancel</button>
+                    <button class="action confirm" type="submit" id="save">Add Car</button>
+                    <button class="action cancel" type="submit" id="cancel">Cancel</button>
                 </div>
             </form>
         </section>
 
-        <section class="editor" >
+        <section class="editor" id="editCar">
             <h3>Edit Car</h3>
             <form class="align" id="edit-form">
+                <input type="hidden" id="" name="id" >
                 <label>
                     <span>Make</span>
                     <input type="text" name="make">
@@ -113,8 +114,8 @@
                 </label>
 
                 <div>
-                    <button class="action confirm">Save Car</button>
-                    <button class="action cancel">Cancel</button>
+                    <button class="action confirm" id="save">Save Car</button>
+                    <button class="action cancel" id="cancel">Cancel</button>
                 </div>
             </form>
         </section>

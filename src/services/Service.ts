@@ -8,7 +8,7 @@ export interface Service <T> {
     getAll(): Promise<T[]>;
     getById(id: string): Promise<T>;
     create(data): Promise<T>;
-    update(): Promise<T>
+    update(id: any, data: any): Promise<T>
     delete(id: string): Promise<void>
 }
 
@@ -31,8 +31,10 @@ export abstract class DataService<T> implements Service<T>{
         const record = await this.collection.create(data);
         return this.parseRecord(record);
     }
-    update(): Promise<T> {
-        throw new Error("Method not implemented.");
+    async update(id: any, data: any): Promise<T> {
+        //this.validate(data);
+        const record = await this.collection.update(id, data);
+        return this.parseRecord(record);
     }
     delete(id: string): Promise<void> {
         return this.collection.delete(id);

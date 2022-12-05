@@ -1,17 +1,18 @@
+import { th } from "./dom";
+
 export class Editor {
     constructor(
         private form: HTMLFormElement,
         private callback: (data: object) => any,
         private propNames: string[]
     ) {
-        this.form.addEventListener('submit', this.onSubmit.bind(this))
+        this.form.addEventListener('submit', this.onSubmit.bind(this));
+
     }
 
     setValue(name: string, value: any) {
         const target = this.form.querySelector(`[name="${name}"]`);
-        // if (value instanceof Date) {
-        //     value = value.toISOString().slice(0, 10);
-        // }
+
 
         if (target instanceof HTMLInputElement) {
             if (target.type == 'checkbox') {
@@ -42,10 +43,33 @@ export class Editor {
         parent.appendChild(this.form);
     }
 
-    private onSubmit(event: SubmitEvent) {
+    private onSubmit(event: Event) {
         event.preventDefault();
-        const formData = new FormData(this.form);
-        const data = Object.fromEntries(this.propNames.map(n => [n, formData.get(n)]));
-        this.callback(data);
+
+
+        
+
+         
+                const formData = new FormData(this.form);
+                //console.log(event.target as HTMLInputElement)
+                const data = Object.fromEntries(this.propNames.map(n => [n, formData.get(n)]));
+                this.callback(data);
+            
+
+
+
+   
+
+        //         if ((event.target as HTMLInputElement).type === 'submit') {
+
+        //             
+        //         }else{
+        //             console.log((event.target as HTMLButtonElement).id );
+        //             console.log(event.currentTarget.addEventListener('click',(e) => {
+        // console.log(e.target)
+
+        //             }))
+        //         }
+
     }
 }

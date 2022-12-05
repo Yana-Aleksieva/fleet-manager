@@ -5,10 +5,10 @@ import { DataService } from "./Service";
 
 export class CarService extends DataService<Car>{
     protected parseRecord(record: Cars): Car {
-        
+
         const data = record;
         const result = new Car(
-         data.id,
+            data.id,
             data.make,
             data.model,
             data.bodyType,

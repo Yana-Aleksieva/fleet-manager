@@ -6,9 +6,10 @@ export class Table {
     private rows: Map<object, HTMLTableRowElement> = new Map();
 
     constructor(
-        private element: HTMLTableElement,
+        public element: HTMLTableElement,
         private createRow: (record: any) => HTMLTableRowElement,
         private identify?: (records: any[], id: any) => any,
+
         records?: any[]
     ) {
         if (records) {
@@ -35,5 +36,34 @@ export class Table {
     getRow(id: any): HTMLTableRowElement {
         const record = this.get(id);
         return this.rows.get(record);
+    }
+
+    remove(id: any) {
+
+        const data = this.get(id);
+        const index = this.records.findIndex(d => d == data);
+        const row = this.getRow(id);
+
+        row.remove();
+        this.rows.delete(data);
+
+        // Update record in collection
+        this.records.splice(index, 1);
+    }
+
+    replace(id: any, data: any) {
+
+        const record = this.get(id);
+        const index = this.records.findIndex(r => r == record);
+        const row = this.getRow(id);
+
+        // Update row in DOM and collection
+        const newRow = this.createRow(data);
+        row.replaceWith(newRow);
+        this.rows.set(record, newRow);
+
+        // Update record in collection
+        this.records.splice(index, 1, data);
+
     }
 }

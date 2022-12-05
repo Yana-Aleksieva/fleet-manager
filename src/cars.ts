@@ -1,49 +1,62 @@
 import { button, td, tr } from "./dom/dom";
 import { Editor } from "./dom/Editor";
 import { Table } from "./dom/Table";
-import { Car } from "./models/Car";
 import { Cars } from "./models/util";
 import { CarService } from "./services/CarService";
 import { Collections } from "./services/Collection";
-import { DataService } from "./services/Service";
 import { LocalStorage } from "./services/Storage";
 
-console.log('cars');
+const section = document.querySelector('#editCar')
 const form = document.getElementById('add-form') as HTMLFormElement;
 const editForm = document.getElementById('edit-form') as HTMLFormElement;
 const table = document.querySelector('table');
+const addBtn = document.querySelector('#add') as HTMLButtonElement;
+
 const storage = new LocalStorage();
 const vechicles = new Collections(storage, 'vehicles');
 const carService = new CarService(vechicles);
 const tableManager = new Table(table, createTableRow, identifyCar);
-const addForm = new Editor(form, onSubmit.bind(null, tableManager), ['make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice'])
-const car = {
+const addForm = new Editor(form, onSubmit.bind(null, tableManager), ['make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice']);
+const formEDit = new Editor(editForm, onEdit.bind(null, tableManager), ['id', 'make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice']);
+formEDit.remove();
+addForm.remove()
+addBtn.addEventListener('click', (event: SubmitEvent) => addForm.attachTo(document.querySelector('#addCar')));
+hydrate(tableManager);
+tableManager.element.addEventListener('click', onTableClick);
 
-    make: 'Opel',
-    model: 'A4',
-    bodyType: 'sedan',
-    numberOfSeats: 4,
-    transmission: 'manual',
-    rentalPrice: 444
-
-}
-hidrate(tableManager)
-async function hidrate(tableManager: Table) {
+async function hydrate(tableManager: Table) {
     const cars = await carService.getAll();
     for (let item of cars) {
         tableManager.add(item);
     }
 }
-async function onStart() {
-    //const c = await carService.create(car)
-    const cars = await carService.getAll();
-    console.log(cars);
+
+
+async function onTableClick(event: MouseEvent) {
+    if (event.target instanceof HTMLButtonElement) {
+
+        const id = event.target.parentElement.parentElement.id;
+
+        if (event.target.id == 'edit') {
+
+            formEDit.attachTo(section);
+            const record = tableManager.get(id);
+            formEDit.setValues(record);
+        } else {
+
+            const element = vechicles.getById(id);
+            await carService.delete(id);
+            let row = tableManager.getRow(id);
+            row.remove()
+           
+
+        }
+    }
 }
-onStart()
 
 
 function createTableRow(car: Cars) {
-    const row = tr({ carId: car.id },
+    const row = tr({ carId: car.id, id: car.id },
         td({}, car.id,),
         td({}, car.make),
         td({}, car.model),
@@ -51,7 +64,7 @@ function createTableRow(car: Cars) {
         td({}, car.numberOfSeats.toString()),
         td({}, car.transmission),
         td({}, car.rentalPrice.toString()),
-        td({}, button({ className: 'action' }, 'Edit'), button({ className: 'action' }, 'Delete'))
+        td({}, button({ className: 'action', id: 'edit' }, 'Edit'), button({ className: 'action', id: 'cancel' }, 'Delete'))
     )
 
     return row;
@@ -74,4 +87,16 @@ async function onSubmit(tableManager: Table, { make, model, bodyType, numberOfSe
     });
 
     tableManager.add(result);
+    addForm.clear()
+    addForm.remove();
+}
+
+async function onEdit(tableManager: Table, { id, make, model, bodyType, numberOfSeats, transmission, rentalPrice }) {
+
+
+    const result = await carService.update(id, { make, model, bodyType, numberOfSeats, transmission, rentalPrice });
+    tableManager.replace(id, result);
+    formEDit.clear();
+    formEDit.remove();
+
 }
