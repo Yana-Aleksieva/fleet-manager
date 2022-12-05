@@ -6,12 +6,11 @@ import { CarService } from "./services/CarService";
 import { Collections } from "./services/Collection";
 import { LocalStorage } from "./services/Storage";
 
-const section = document.querySelector('#editCar')
+const section: HTMLElement = document.querySelector('#formContainer');
 const form = document.getElementById('add-form') as HTMLFormElement;
 const editForm = document.getElementById('edit-form') as HTMLFormElement;
 const table = document.querySelector('table');
 const addBtn = document.querySelector('#add') as HTMLButtonElement;
-
 const storage = new LocalStorage();
 const vechicles = new Collections(storage, 'vehicles');
 const carService = new CarService(vechicles);
@@ -23,10 +22,12 @@ addForm.remove();
 tableManager.element.addEventListener('click', onTableClick);
 
 addBtn.addEventListener('click', (event: SubmitEvent) => {
-    let section: HTMLElement = document.querySelector('#addCar');
-    section.style.display = 'block'
-    addForm.attachTo(section)
+
+    
+   // section.style.display = 'block';
+    addForm.attachTo(section, 'Add Car', section)
 });
+
 hydrate(tableManager);
 
 
@@ -42,22 +43,24 @@ async function hydrate(tableManager: Table) {
 
 
 async function onTableClick(event: MouseEvent) {
+    //section.style.display = 'block';
     if (event.target instanceof HTMLButtonElement) {
 
         const id = event.target.parentElement.parentElement.id;
 
         if (event.target.id == 'edit') {
 
-            formEDit.attachTo(section);
+            formEDit.attachTo(section, 'Edit Car', section);
             const record = tableManager.get(id);
-            console.log(record)
             formEDit.setValues(record);
         } else {
 
-            const element = vechicles.getById(id);
+            
             await carService.delete(id);
             let row = tableManager.getRow(id);
-            row.remove()
+            row.remove();
+           // section.style.display = 'none';
+
 
 
         }
@@ -95,7 +98,7 @@ async function onSubmit(tableManager: Table, { make, model, bodyType, numberOfSe
         transmission,
         rentalPrice
     });
-    console.log(result)
+
     tableManager.add(result);
     addForm.clear()
     addForm.remove();
