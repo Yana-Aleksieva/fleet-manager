@@ -1,6 +1,8 @@
 import { RecordId } from "../services/Storage";
 
 export interface Record {
+    status?: string;
+    type?: string;
     id: string
 }
 

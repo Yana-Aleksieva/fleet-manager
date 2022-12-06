@@ -10,11 +10,12 @@ const section: HTMLElement = document.querySelector('#formContainer');
 const form = document.getElementById('add-form') as HTMLFormElement;
 const editForm = document.getElementById('edit-form') as HTMLFormElement;
 const table = document.querySelector('table');
+let tbody = document.querySelector('tbody');
 const addBtn = document.querySelector('#add') as HTMLButtonElement;
 const storage = new LocalStorage();
 const vechicles = new Collections(storage, 'vehicles');
 const carService = new CarService(vechicles);
-const tableManager = new Table(table, createTableRow, identifyCar);
+const tableManager = new Table(table,  createTableRow, identifyCar);
 const addForm = new Editor(form, onSubmit.bind(null, tableManager), ['make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice', 'type']);
 const formEDit = new Editor(editForm, onEdit.bind(null, tableManager), ['id', 'make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'rentalPrice']);
 formEDit.remove();
@@ -23,17 +24,17 @@ tableManager.element.addEventListener('click', onTableClick);
 
 addBtn.addEventListener('click', (event: SubmitEvent) => {
 
-    
+
 
     addForm.attachTo(section, 'Add Car', section)
 });
 
 hydrate(tableManager);
 
-
+console.log(tableManager)
 async function hydrate(tableManager: Table) {
     if (localStorage.length != 0) {
-        const cars = await carService.filter('numberOfSeats');
+        const cars = await carService.filter('cars');
         for (let item of cars) {
             tableManager.add(item);
         }
@@ -43,7 +44,7 @@ async function hydrate(tableManager: Table) {
 
 
 async function onTableClick(event: MouseEvent) {
-    
+
     if (event.target instanceof HTMLButtonElement) {
 
         const id = event.target.parentElement.parentElement.id;
@@ -55,11 +56,11 @@ async function onTableClick(event: MouseEvent) {
             formEDit.setValues(record);
         } else {
 
-            
+
             await carService.delete(id);
             let row = tableManager.getRow(id);
             row.remove();
-           
+
 
 
 

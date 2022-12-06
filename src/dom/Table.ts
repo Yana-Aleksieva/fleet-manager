@@ -7,6 +7,7 @@ export class Table {
 
     constructor(
         public element: HTMLTableElement,
+  
         private createRow: (record: any) => HTMLTableRowElement,
         private identify?: (records: any[], id: any) => any,
 
@@ -20,7 +21,7 @@ export class Table {
 
     add(record: any) {
         const row = this.createRow(record);
-        this.element.appendChild(row);
+        this.element.children[1].appendChild(row);
         this.records.push(record);
         this.rows.set(record, row);
     }
@@ -66,4 +67,5 @@ export class Table {
         this.records.splice(index, 1, data);
 
     }
+    
 }

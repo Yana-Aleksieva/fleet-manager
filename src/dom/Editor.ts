@@ -65,18 +65,25 @@ export class Editor {
     private onSubmit(event: SubmitEvent) {
         event.preventDefault();
 
-        if (event.submitter.id != 'cancel') {
+        
+        if (event.submitter.id) {
+            if (event.submitter.id != 'cancel') {
+                const formData = new FormData(this.form);
+                const data = Object.fromEntries(this.propNames.map(n => [n, formData.get(n)]));
+                this.callback(data);
+                this.section.style.display = 'none';
+
+            } else {
+                this.clear();
+                this.remove();
+                this.section.style.display = 'none';
+            }
+        } else {
+
             const formData = new FormData(this.form);
             const data = Object.fromEntries(this.propNames.map(n => [n, formData.get(n)]));
             this.callback(data);
-            this.section.style.display = 'none';
-
-        } else {
-            this.clear();
-            this.remove();
-            this.section.style.display = 'none';
         }
-
 
     }
 }
