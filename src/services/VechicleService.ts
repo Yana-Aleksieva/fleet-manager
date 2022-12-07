@@ -6,8 +6,8 @@ import { DataService } from "./Service";
 
 
 
-export class VechicleService extends DataService<Vechicle>{s
-    protected parseRecord(record): Vechicle {
+export class VechicleService extends DataService<Vechicles>{s
+    protected parseRecord(record): Vechicles {
 
         const data = record;
         const result = new Vechicles(

@@ -1,7 +1,7 @@
 import { th } from "./dom";
 
 export class Editor {
-    private name: HTMLHeadingElement
+    private name?: HTMLHeadingElement
     private section: HTMLElement
     constructor(
         private form: HTMLFormElement,
@@ -41,7 +41,10 @@ export class Editor {
 
     clear() {
 
-        this.name.textContent = '';
+        if(this.name){
+            this.name.textContent = '';
+        }
+      
 
         this.form.reset();
     }

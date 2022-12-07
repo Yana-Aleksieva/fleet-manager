@@ -15,7 +15,9 @@ capacity: number
         model: string,
         cargoType: Cargo,
         capacity: number,
-        rentalPrice: number
+        rentalPrice: number,
+        rentedTo?: null|string
+
     ) {
         super();
         this.id = id,
@@ -23,7 +25,9 @@ capacity: number
         this.model = model,
         this.cargoType = cargoType,
         this.capacity = capacity,
-        this.rentalPrice = rentalPrice
+        this.rentalPrice = rentalPrice,
+        this.rentedTo === undefined ? null : this.rentedTo = rentedTo,
+        this.type = 'truck'
 
     }
 }

@@ -49,28 +49,22 @@ export abstract class DataService<T> implements Service<T>{
         if (criteria) {
             if (criteria.endsWith('s')) {
                 result = (await this.collection.getAll()).filter(obj => obj.type === criteria.substring(0, criteria.length - 1));
-              
+
             } else if (criteria.includes('0')) {
-                result = (await this.collection.getAll())
+                result = (await this.collection.getAll());
             } else {
                 result = (await this.collection.getAll()).filter(obj => obj.hasOwnProperty(criteria));
+
+
+               
             }
-            return result
-        } else if (criteria && criteria1) {
-            if (criteria.endsWith('s')) {
-                result = (await this.collection.getAll())
-                    .filter(obj => obj.type === criteria.substring(0, criteria.length - 1))
-                    .filter(obj => obj.status === 'available')
-                //console.log(criteria.substring(0, criteria.length-1))
-            } else if (criteria.includes('0')) {
-                result = (await this.collection.getAll())
-            } else {
-                result = (await this.collection.getAll())
-                .filter(obj => obj.hasOwnProperty(criteria))
-              
+            if (criteria1) {
+                result = result.filter(obj => obj.status === 'Available');
+                console.log(result)
             }
             return result
         }
+    
 
     }
     protected abstract parseRecord(record: Record): T

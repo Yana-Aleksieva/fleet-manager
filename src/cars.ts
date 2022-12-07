@@ -99,7 +99,8 @@ async function onSubmit(tableManager: Table, { make, model, bodyType, numberOfSe
         transmission,
         rentalPrice,
         type: 'car',
-        status: 'Available'
+        status: 'Available',
+        rentedTo: null
     });
 
     tableManager.add(result);

@@ -101,7 +101,9 @@ async function onSubmit(tableManager: Table, { make, model, cargoType, capacity,
         capacity,
         rentalPrice,
         type: 'truck',
-        status: 'Available'
+        status: 'Available',
+        rentedTo: null,
+       
     });
 
     tableManager.add(result);

@@ -17,7 +17,7 @@ export class Car extends Vechicle {
         numberOfSeats: number,
         transmission: Transmission,
         rentalPrice: number,
-        rentedTo?: string
+        rentedTo?: null|string
 
     ) {
         super();

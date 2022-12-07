@@ -49,10 +49,11 @@ async function hydrate(tableManager: Table) {
 
 async function onSubmit(tableManager: Table, { type, availableOnly }) {
     let p = document.querySelectorAll('table tr')
-    let rows = Array.from(p)
+    let rows = Array.from(p);
 
+   let filterVehicles = await service.filter(type);
     const data = await service.filter(type);
-
+    //console.log(availableOnly,filterVehicles)
     for (let row of rows) {
 
         if (row.id) {
@@ -63,10 +64,11 @@ async function onSubmit(tableManager: Table, { type, availableOnly }) {
 
     }
     if (availableOnly == 'on') {
-        const filterVehicles = await service.filter(type, availableOnly);
+        filterVehicles = await service.filter(type, availableOnly);
+        console.log(availableOnly,filterVehicles)
     }
-    const filterVehicles = await service.filter(type);
-    console.log(availableOnly)
+  
+   
     for (let item of filterVehicles) {
         tableManager.add(item);
     }
