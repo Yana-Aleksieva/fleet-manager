@@ -7,7 +7,7 @@ export class Car extends Vechicle {
     bodyType: BodyType
     numberOfSeats: number
     transmission: Transmission
-
+    status: string
     constructor(
         id: string,
         make: string,
@@ -17,7 +17,7 @@ export class Car extends Vechicle {
         numberOfSeats: number,
         transmission: Transmission,
         rentalPrice: number,
-        rentedTo?: null|string
+        rentedTo?: null | string
 
     ) {
         super();
@@ -30,6 +30,7 @@ export class Car extends Vechicle {
             this.rentalPrice = rentalPrice,
             this.rentedTo === undefined ? null : this.rentedTo = rentedTo,
             this.type = 'car'
+        this.status = 'Available'
 
 
 

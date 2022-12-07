@@ -1,6 +1,8 @@
 import { a, button, td, tr } from "./dom/dom";
 import { Editor } from "./dom/Editor";
 import { Table } from "./dom/Table";
+import { Car } from "./models/Car";
+import { Truck } from "./models/Truck";
 import { Vechicle } from "./models/Vechicle";
 import { Vechicles } from "./models/Vechicles";
 import { Collections } from "./services/Collection";
@@ -18,7 +20,7 @@ const form = new Editor(filterForm, onSubmit.bind(null, tableManager), ['type', 
 
 hydrate(tableManager);
 
-function createTableRow(vehicle: Vechicles) {
+function createTableRow(vehicle: Car| Truck) {
     const row = tr({ vechicleId: vehicle.id, id: vehicle.id },
         td({}, vehicle.id,),
         td({}, vehicle.type,),

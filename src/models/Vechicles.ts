@@ -7,7 +7,13 @@ export class Vechicles extends Vechicle {
 
     type: 'car' | 'truck'
     status: 'Available' | 'Rented'
+    
     details: HTMLLIElement
+    numberOfSeats?: number
+    bodyType?: number
+    cargoType?: number
+    transmission?: string
+    capacity?: number
 
     constructor(
         id: string,
@@ -16,7 +22,7 @@ export class Vechicles extends Vechicle {
         model: string,
         rentalPrice: number,
         status: 'Available' | 'Rented',
-        details: HTMLLIElement
+        details: HTMLLIElement,
 
     ) {
         super();

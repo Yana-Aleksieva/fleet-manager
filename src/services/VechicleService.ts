@@ -15,10 +15,11 @@ export class VechicleService extends DataService<Vechicles>{s
             data.type,
             data.model,
             data.make,
-           
             data.rentalPrice,
             data.status,
-            data.details
+            data.details,
+           
+
 
 
         )

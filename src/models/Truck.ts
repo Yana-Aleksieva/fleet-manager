@@ -7,7 +7,7 @@ export class Truck extends Vechicle {
 type: 'truck'  
 cargoType: Cargo
 capacity: number
-
+status: string
 
     constructor(
         id: string,
@@ -27,7 +27,8 @@ capacity: number
         this.capacity = capacity,
         this.rentalPrice = rentalPrice,
         this.rentedTo === undefined ? null : this.rentedTo = rentedTo,
-        this.type = 'truck'
+        this.type = 'truck',
+        this.status = 'Available'
 
     }
 }
