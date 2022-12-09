@@ -26,15 +26,15 @@ export class VechicleService extends DataService<Vechicles>{s
         return result;
     }
     protected validate(data: any): void {
-        // if (typeof data.bodyType != 'string') {
-        //     throw new TypeError('Incompatible record. Invalid property "body');
-        // }
-        // if (typeof data.numbersOfSeats != 'number') {
-        //     throw new TypeError('Incompatible record. Invalid property "seats"');
-        // }
-        // if (typeof data.rentalPrice != 'number') {
-        //     throw new TypeError('Incompatible record. Invalid property "rent"');
-        // }
+        if (typeof data.bodyType != 'string') {
+            throw new TypeError('Incompatible record. Invalid property "body');
+        }
+        if (typeof data.numbersOfSeats != 'number') {
+            throw new TypeError('Incompatible record. Invalid property "seats"');
+        }
+        if (typeof data.rentalPrice != 'number') {
+            throw new TypeError('Incompatible record. Invalid property "rent"');
+        }
     }
 
 

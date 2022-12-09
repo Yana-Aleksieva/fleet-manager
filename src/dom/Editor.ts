@@ -41,10 +41,10 @@ export class Editor {
 
     clear() {
 
-        if(this.name){
+        if (this.name) {
             this.name.textContent = '';
         }
-      
+
 
         this.form.reset();
     }
@@ -68,7 +68,7 @@ export class Editor {
     private onSubmit(event: SubmitEvent) {
         event.preventDefault();
 
-        
+
         if (event.submitter.id) {
             if (event.submitter.id != 'cancel') {
                 const formData = new FormData(this.form);

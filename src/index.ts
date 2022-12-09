@@ -55,7 +55,7 @@ async function onSubmit(tableManager: Table, { type, availableOnly }) {
 
    let filterVehicles = await service.filter(type);
     const data = await service.filter(type);
-    //console.log(availableOnly,filterVehicles)
+   
     for (let row of rows) {
 
         if (row.id) {
