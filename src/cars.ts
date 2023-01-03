@@ -31,13 +31,15 @@ hydrate(tableManager);
 
 
 async function hydrate(tableManager: Table) {
-    if (localStorage.length != 0) {
-        const cars = await carService.filter('transmission');
+    const cars = await carService.filter('transmission');
+    if (cars.length > 0) {
+        tableManager.show();
         for (let item of cars) {
             tableManager.add(item);
-        }
-    }
 
+        }
+
+    }
 }
 
 
@@ -97,9 +99,10 @@ async function onSubmit(tableManager: Table, { make, model, bodyType, numberOfSe
         status: 'Available',
         rentedTo: null
     });
-
+    tableManager.show();
     tableManager.add(result);
-    addForm.clear()
+
+    addForm.clear();
     addForm.remove();
 }
 

@@ -7,7 +7,7 @@ import { Collections } from "./services/Collection";
 import { LocalStorage } from "./services/Storage";
 import { TruckService } from "./services/TruckService";
 
-console.log('trucks');
+
 
 
 const section: HTMLElement = document.querySelector('#formContainer');
@@ -17,12 +17,12 @@ const table = document.querySelector('table');
 const addBtn = document.querySelector('#addTruck') as HTMLButtonElement;
 const storage = new LocalStorage();
 const vechicles = new Collections(storage, 'vehicles')
-
 const truckService = new TruckService(vechicles);
-
 const tableManager = new Table(table, createTableRow, identifyCar);
 const addForm = new Editor(form, onSubmit.bind(null, tableManager), ['make', 'model', 'cargoType', 'capacity', 'rentalPrice']);
 const formEDit = new Editor(editForm, onEdit.bind(null, tableManager), ['id', 'make', 'model', 'cargoType', 'capacity', 'rentalPrice']);
+
+
 formEDit.remove();
 addForm.remove();
 tableManager.element.addEventListener('click', onTableClick);
@@ -38,10 +38,11 @@ hydrate(tableManager);
 
 async function hydrate(tableManager: Table) {
 
-    if (localStorage.length != 0) {
 
-        const trucks = await truckService.filter('capacity');
-  
+    const trucks = await truckService.filter('capacity');
+    if (trucks.length !== 0) {
+
+        tableManager.show();
         for (let item of trucks) {
             tableManager.add(item);
         }
@@ -64,10 +65,10 @@ async function onTableClick(event: MouseEvent) {
         } else {
 
 
-            await truckService.delete(id);
+          
             let row = tableManager.getRow(id);
             row.remove();
-
+            await truckService.delete(id);
         }
     }
 }
@@ -103,9 +104,9 @@ async function onSubmit(tableManager: Table, { make, model, cargoType, capacity,
         type: 'truck',
         status: 'Available',
         rentedTo: null,
-       
-    });
 
+    });
+    document.querySelector('main').style.display = 'block';
     tableManager.add(result);
     addForm.clear()
     addForm.remove();

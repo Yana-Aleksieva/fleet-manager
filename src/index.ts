@@ -20,7 +20,7 @@ const form = new Editor(filterForm, onSubmit.bind(null, tableManager), ['type', 
 
 hydrate(tableManager);
 
-function createTableRow(vehicle: Car| Truck) {
+function createTableRow(vehicle: Car | Truck) {
     const row = tr({ vechicleId: vehicle.id, id: vehicle.id },
         td({}, vehicle.id,),
         td({}, vehicle.type,),
@@ -39,23 +39,27 @@ function identifyCar(vechicles: Vechicles[], id: string) {
 }
 
 async function hydrate(tableManager: Table) {
-    if (localStorage.length != 0) {
-        const vechicles = await service.getAll();
-        for (let item of vechicles) {
+
+    let sorted = await service.sort();
+
+    if (sorted.length > 0) {
+
+
+        for (let item of sorted) {
             tableManager.add(item);
         }
+        tableManager.show();
     }
-
 }
 
 
 async function onSubmit(tableManager: Table, { type, availableOnly }) {
-    let p = document.querySelectorAll('table tr')
-    let rows = Array.from(p);
+    let tr = document.querySelectorAll('table tr')
+    let rows = Array.from(tr);
 
-   let filterVehicles = await service.filter(type);
-    const data = await service.filter(type);
-   
+    let filterVehicles = await service.filter(type);
+
+
     for (let row of rows) {
 
         if (row.id) {
@@ -67,10 +71,10 @@ async function onSubmit(tableManager: Table, { type, availableOnly }) {
     }
     if (availableOnly == 'on') {
         filterVehicles = await service.filter(type, availableOnly);
-        console.log(availableOnly,filterVehicles)
+
     }
-  
-   
+
+    filterVehicles = filterVehicles.sort((a, b) => Number(a.rentalPrice) - Number(b.rentalPrice));
     for (let item of filterVehicles) {
         tableManager.add(item);
     }

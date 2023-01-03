@@ -6,7 +6,8 @@ import { DataService } from "./Service";
 
 
 
-export class VechicleService extends DataService<Vechicles>{s
+export class VechicleService extends DataService<Vechicles>{
+    
     protected parseRecord(record): Vechicles {
 
         const data = record;
@@ -18,7 +19,7 @@ export class VechicleService extends DataService<Vechicles>{s
             data.rentalPrice,
             data.status,
             data.details,
-           
+
 
 
 
@@ -36,6 +37,7 @@ export class VechicleService extends DataService<Vechicles>{s
             throw new TypeError('Incompatible record. Invalid property "rent"');
         }
     }
+
 
 
 

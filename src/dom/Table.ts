@@ -67,5 +67,17 @@ export class Table {
         this.records.splice(index, 1, data);
 
     }
+
+    hide(){
+      
+        this.element.parentElement.style.display = 'none';
+    }
+
+    show(){
+        this.element.parentElement.style.display = 'block';
+    }
     
+    sort(){
+        
+    }
 }

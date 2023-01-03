@@ -60,13 +60,20 @@ export abstract class DataService<T> implements Service<T>{
             }
             if (criteria1) {
                 result = result.filter(obj => obj.status === 'Available');
-                console.log(result)
+                
             }
-            return result
+            return result;
         }
     
 
     }
+
+    async sort(){
+        let result  =  await (await this.collection.getAll()).sort((a, b) => Number(a.rentalPrice) - Number(b.rentalPrice));
+   
+        return result;
+    }
+    
     protected abstract parseRecord(record: Record): T
     protected abstract validate(data: any): void
 }

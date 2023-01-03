@@ -3,13 +3,15 @@
 import { Details } from "./dom/Details";
 import { button, div, form, input, label, p, span, strong } from "./dom/dom";
 import { Editor } from "./dom/Editor";
+import { getDetails } from "./models/util";
 import { Collections } from "./services/Collection";
 import { LocalStorage } from "./services/Storage";
+import { VechicleService } from "./services/VechicleService";
 
 const id = window.location.search.substring(1);
 const storage = new LocalStorage();
 const vechicles = new Collections(storage, 'vehicles');
-
+const service = new VechicleService(vechicles);
 
 const main = document.querySelector('main');
 
@@ -27,9 +29,9 @@ async function onLoad() {
 
     let span: HTMLElement = document.querySelector('#status');
     let btn: HTMLButtonElement = document.querySelector('.action.release');
-    const my = new Details(span, btn, vechicle, vechicles, onClick.bind({}));
+    const details = new Details(span, btn, vechicle, vechicles, onClick.bind({}));
     const forms = document.querySelector('form');
-    my.setStyle();
+    details.setStyle();
     function onClick() {
         forms.style.display = 'block';
         const newForm = new Editor(forms, onRented.bind(null), ['name']);
@@ -41,8 +43,8 @@ async function onLoad() {
             vechicles.update(vechicle.id, vechicle);
             newForm.clear();
             forms.style.display = 'none';
-            my.setStyle();
-            my.setText();
+            details.setStyle();
+            details.setText();
         }
 
     }
@@ -57,15 +59,15 @@ async function onLoad() {
             vechicles.update(vechicle.id, vechicle);
             newForm.clear();
             forms.style.display = 'none';
-            my.setStyle();
-            my.setText();
+            details.setStyle();
+            details.setText();
         }
 
 
     } else {
         forms.style.display = 'none';
-        my.setStyle();
-        my.setText();
+        details.setStyle();
+        details.setText();
         vechicle.rentedTo = null;
         vechicle.status = 'Available';
         vechicles.update(vechicle.id, vechicle);
@@ -77,11 +79,13 @@ onLoad()
 
 async function createDetails(vechicle) {
 
+    console.log(getDetails(vechicle));
+    let types = getDetails(vechicle);
     const section = div({ vehicle: vechicle.id, className: 'details' },
         p({}, span({ className: 'col' }, `ID: `), strong({}, `${vechicle.id}`)),
-        p({}, span({ className: 'col' }, `Body type: `), strong({}, `${vechicle.bodyType || vechicle.cargoType}`)),
-        p({}, span({ className: 'col' }, `Seats: `), strong({}, `${vechicle.numberOfSeats || vechicle.capacity}`)),
-        p({}, span({ className: 'col' }, `Transmission: `), strong({}, `${vechicle.transmission || vechicle.cargoType}`)),
+        p({}, span({ className: 'col' }, `${types[2]}: `), strong({}, `${vechicle.bodyType || vechicle.cargoType}`)),
+        p({}, span({ className: 'col' }, `${types[3]}:  `), strong({}, `${vechicle.numberOfSeats || vechicle.capacity}`)),
+        p({}, span({ className: 'col' }, `${types[4]}:  `), strong({}, `${vechicle.transmission ||vechicle.rentalPrice }`)),
 
     );
     const rentalSection = await createRentalSection()
